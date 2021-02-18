@@ -1,4 +1,3 @@
 package com.example.jetpack_compose_todo
 
-class ToDo {
-}
+data class ToDo(val title: String, val todo: String)
