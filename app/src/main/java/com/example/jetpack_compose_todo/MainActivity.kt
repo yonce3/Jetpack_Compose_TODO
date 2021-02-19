@@ -2,19 +2,19 @@ package com.example.jetpack_compose_todo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.imageResource
@@ -32,22 +32,29 @@ class MainActivity : AppCompatActivity() {
         setContent {
             //Text("Hello World")
             //TopAppBar()
-            NewStory()
+            ListViewLayout(listOf(ToDo("a", "a"), ToDo("", "")), Modifier)
         }
     }
 
     @Composable
-    fun NewStory() {
+    fun ListViewLayout(items: List<ToDo>, modifier: Modifier) {
         //val image = imageResource(R.drawable.header)
-        MaterialTheme {
-            Scaffold(
-                    topBar = {
-                        Text(text = "Jetpack ToDo",
-                                style = MaterialTheme.typography.h3)
-                    }
-            ) {
+//        MaterialTheme {
+//            Scaffold(
+//                    topBar = {
+//                        Text(text = "Jetpack ToDo",
+//                                style = MaterialTheme.typography.h3)
+//                    }
+//            ) {
+//            }
+//            ToDoList(listOf(ToDo("titleaaaaaaaaaaaaaaaaaaaaaaaaaaa", "text"), ToDo("a", "b")), {})
+//        }
+        Scaffold {
+            LazyColumn(modifier = modifier) {
+                items(items = items) { item ->
+                    ToDoItem(item, { Toast.makeText(this@MainActivity, "タップ", Toast.LENGTH_SHORT).show() })
+                }
             }
-            ToDoList(listOf(ToDo("titleaaaaaaaaaaaaaaaaaaaaaaaaaaa", "text"), ToDo("a", "b")), {})
         }
     }
 
@@ -80,29 +87,13 @@ class MainActivity : AppCompatActivity() {
                 fontWeight = FontWeight.Bold)
             Text(todo.todo,
                 style = typography.body2)
+            Divider(color = Color.Black)
         }
-    }
-
-    @Composable
-    fun ToDoList(
-        todoItems: List<ToDo>,
-        onSelected: () -> Unit
-    ) {
-        Surface(Modifier.fillMaxSize()) {
-            LazyColumnFor(todoItems) { item ->
-                ToDoItem(item, onSelected)
-            }
-        }
-//        ScrollableColumn(Modifier.fillMaxSize()) {
-//            todoItems.forEach {
-//                ToDoItem(it) {  }
-//            }
-//        }
     }
 
     @Preview
     @Composable
     fun DefaultPreview() {
-        NewStory()
+        //NewStory()
     }
 }
