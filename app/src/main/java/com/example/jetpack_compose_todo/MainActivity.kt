@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,27 +49,29 @@ class MainActivity : AppCompatActivity() {
 
         // for JetPack Compose
         setContent {
-            10.times { i -> items.add(ToDo("$i", "${i}ですよ")) }
-            ListViewLayout(items, { it -> this}, Modifier)
+            10.times { i -> items.add(ToDo(i, "$i", "${i}ですよ")) }
+            ListViewLayout(viewModel, items, { it -> this}, Modifier)
         }
     }
 
     @Composable
-    fun ListViewLayout(items: List<ToDo>, onClicked: (item: ToDo) -> Unit, modifier: Modifier) {
+    fun ListViewLayout(viewModel: MainViewModel, items: List<ToDo>, onClicked: (item: ToDo) -> Unit, modifier: Modifier) {
+        //val items: List<ToDo> by viewModel.items.observeAsState(listOf<ToDo>())
         Scaffold(
                 topBar = {
                     TopAppBar(
                             title = { Text(text = "Jetpack Compose ToDo") },
                             actions = {
-                                val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
-                                startActivity(intent)
 //                                IconButton(onClick = { /* doSomething() */ }) {
 //                                    Icon(Icons.Filled.Favorite, contentDescription = null)
 //                                }
                                 })
                 },
                 floatingActionButtonPosition = FabPosition.End,
-                floatingActionButton = { FloatingActionButton(onClick = {}){
+                floatingActionButton = { FloatingActionButton(onClick = {
+                    val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
+                    startActivity(intent)
+                }){
                     Text("+", color = Color.White, fontSize = 24.sp, style = MaterialTheme.typography.h3)
                 } },
         ) { innerPadding -> LazyColumn(modifier = modifier) {
