@@ -1,4 +1,4 @@
-package com.example.jetpack_compose_todo
+package com.example.jetpack_compose_todo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,10 +10,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 class AddToDoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{AddToDoLayout()}
-
-        val context = Job()
-        //context.
+        setContent{ AddToDoLayout() }
     }
 
     @Composable

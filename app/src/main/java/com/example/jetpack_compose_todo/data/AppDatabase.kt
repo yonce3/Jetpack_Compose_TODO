@@ -1,4 +1,4 @@
-package com.example.jetpack_compose_todo
+package com.example.jetpack_compose_todo.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
