@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,18 +62,19 @@ class MainActivity : AppCompatActivity() {
                                 })
                 },
                 floatingActionButtonPosition = FabPosition.End,
-                floatingActionButton = { FloatingActionButton(onClick = {
-                    val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
-                    startActivity(intent)
-                }){
-                    Text("+", color = Color.White, fontSize = 24.sp, style = MaterialTheme.typography.h3)
-                } },
-        ) { innerPadding -> LazyColumn(modifier = modifier) {
-                items(items = items) { item ->
-                    ToDoItem(item) { onClicked(item) }
+                floatingActionButton = { ExtendedFloatingActionButton(
+                        icon = { Icon(Icons.Filled.Add) },
+                        text = { },
+                        onClick = { startAddToDoActivity() },
+                        elevation = FloatingActionButtonDefaults.elevation(8.dp)) },
+                bodyContent = { innerPadding ->
+                    LazyColumn(modifier = modifier) {
+                        items(items = items) { item ->
+                            ToDoItem(item) { onClicked(item) }
+                        }
+                    }
                 }
-            }
-        }
+        )
     }
 
     @Composable
@@ -104,4 +109,9 @@ class MainActivity : AppCompatActivity() {
 //        val drawable = getDrawable(imageId) as BitmapDrawable
 //        //return drawable.ima
 //    }
+
+    private fun startAddToDoActivity() {
+        val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
+        startActivity(intent)
+    }
 }

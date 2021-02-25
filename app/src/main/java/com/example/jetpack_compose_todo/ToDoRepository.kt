@@ -8,9 +8,14 @@ import kotlinx.coroutines.withContext
 class ToDoRepository(val db: AppDatabase) {
 
     suspend fun getItems(): List<ToDo>? {
-        var items = null
-        withContext(Dispatchers.IO) {
-            val items = db.toDoDao().getAll()
+        var items = try {
+            withContext(Dispatchers.IO) {
+                db.toDoDao().getAll()
+            }
+        } catch (e: Throwable) {
+            return null
+        } finally {
+            
         }
         return items
     }
