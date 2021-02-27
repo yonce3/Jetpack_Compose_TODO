@@ -62,11 +62,10 @@ class MainActivity : AppCompatActivity() {
                                 })
                 },
                 floatingActionButtonPosition = FabPosition.End,
-                floatingActionButton = { ExtendedFloatingActionButton(
-                        icon = { Icon(Icons.Filled.Add) },
-                        text = { },
+                floatingActionButton = { FloatingActionButton(
                         onClick = { startAddToDoActivity() },
-                        elevation = FloatingActionButtonDefaults.elevation(8.dp)) },
+                        elevation = FloatingActionButtonDefaults.elevation(8.dp))
+                        { Icon(Icons.Filled.Add) } },
                 bodyContent = { innerPadding ->
                     LazyColumn(modifier = modifier) {
                         items(items = items) { item ->

@@ -15,7 +15,7 @@ class ToDoRepository(val db: AppDatabase) {
         } catch (e: Throwable) {
             return null
         } finally {
-            
+
         }
         return items
     }
