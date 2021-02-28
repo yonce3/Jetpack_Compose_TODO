@@ -19,4 +19,14 @@ class ToDoRepository(val db: AppDatabase) {
         }
         return items
     }
+
+    suspend fun insertItem(item: ToDo) {
+        try {
+            withContext(Dispatchers.IO) {
+                db.toDoDao().insertAll(item)
+            }
+        } catch (e:Throwable) {
+            Throwable()
+        }
+    }
 }
