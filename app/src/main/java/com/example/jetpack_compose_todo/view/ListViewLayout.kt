@@ -1,6 +1,5 @@
 package com.example.jetpack_compose_todo.view
 
-import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,5 +69,20 @@ fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
                     style = typography.body2)
         }
     }
+}
+
+@Composable
+fun NoItemLayout(activity: MainActivity) {
+    Scaffold(
+            floatingActionButtonPosition = FabPosition.End,
+            floatingActionButton = {
+                FloatingActionButton(
+                        onClick = { activity.startAddToDoActivity() },
+                        elevation = FloatingActionButtonDefaults.elevation(8.dp))
+                { Icon(Icons.Filled.Add) } },
+            bodyContent = {
+                Text("Please Add Items")
+            }
+    )
 }
 

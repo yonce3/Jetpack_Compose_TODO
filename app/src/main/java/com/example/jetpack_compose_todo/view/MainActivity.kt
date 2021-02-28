@@ -30,7 +30,15 @@ class MainActivity : AppCompatActivity() {
         // for JetPack Compose
         setContent {
             10.times { i -> items.add(ToDo(i, "$i", "${i}ですよ")) }
-            ListViewLayout(viewModel, items, { it -> this}, Modifier, this)
+            /* ToDo: DBから取得した値を表示したい。
+                nullableなリストはどうやるの？
+             */
+
+            viewModel.items.let {
+                ListViewLayout(viewModel, items, { it -> this }, Modifier, this)
+            } ?: run {
+                NoItemLayout(this)
+            }
         }
     }
 
