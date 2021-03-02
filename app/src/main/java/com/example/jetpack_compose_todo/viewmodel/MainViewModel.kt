@@ -11,11 +11,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
     val items: MutableLiveData<List<ToDo>> = MutableLiveData()
-    private val repository: ToDoRepository = ToDoRepository(
-        Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "database-name"
-    ).build())
+    private val repository: ToDoRepository = ToDoRepository(AppDatabase.getDatabase(application))
 
     class Factory(private val application : Application) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("unchecked_cast")
@@ -28,6 +24,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             // repository get Items
             try {
+                println("taroro")
                 val list = repository.getItems()
                 items.postValue(list)
             } catch(error: Throwable) {

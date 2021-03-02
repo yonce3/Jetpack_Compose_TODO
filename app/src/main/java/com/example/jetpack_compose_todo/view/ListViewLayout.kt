@@ -58,7 +58,7 @@ fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
                     .clip(RoundedCornerShape(4.dp))
                     .clickable(onClick = onClick)
                     .fillMaxWidth()) {
-        Checkbox(checked = false, onCheckedChange = {}, modifier = Modifier.padding(4.dp, 0.dp))
+        Checkbox(checked = false, onCheckedChange = {}, modifier = Modifier.padding(12.dp, 0.dp))
         Column(modifier = Modifier.padding(16.dp, 10.dp, 0.dp, 10.dp)) {
             Text(todo.title,
                     style = typography.h6,

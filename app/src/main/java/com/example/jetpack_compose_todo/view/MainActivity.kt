@@ -13,12 +13,30 @@ import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 import com.example.jetpack_compose_todo.data.ToDo
 
 class MainActivity : AppCompatActivity() {
-    var items: ArrayList<ToDo> = arrayListOf()
-    val viewModel: MainViewModel by lazy { MainViewModel.Factory(application).create(MainViewModel::class.java)}
+    val viewModel: MainViewModel by lazy {
+        MainViewModel.Factory(application).create(MainViewModel::class.java)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //viewModel.getItems()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("してるよ")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // for Kotlin
+        // 拡張関数: 記念に残す
         fun Int.times(func: (Int) -> Unit) : Int{
             for (i in 0..this) {
                 func(i)
@@ -26,18 +44,15 @@ class MainActivity : AppCompatActivity() {
             return this
         }
         viewModel.getItems()
-
         // for JetPack Compose
         setContent {
-            10.times { i -> items.add(ToDo(i, "$i", "${i}ですよ")) }
-            /* ToDo: DBから取得した値を表示したい。
-                nullableなリストはどうやるの？
-             */
+            var items: List<ToDo> = listOf()
+            viewModel.items.value?.let {
+                items = it
+            }
 
             viewModel.items.let {
                 ListViewLayout(viewModel, items, { it -> this }, Modifier, this)
-            } ?: run {
-                NoItemLayout(this)
             }
         }
     }

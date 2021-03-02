@@ -11,11 +11,7 @@ import kotlinx.coroutines.launch
 class AddToDoViewModel(application: Application): AndroidViewModel(application) {
     var title: MutableLiveData<String> = MutableLiveData("")
     var todo: MutableLiveData<String> = MutableLiveData("")
-    private val repository: ToDoRepository = ToDoRepository(
-            Room.databaseBuilder(
-                    application,
-                    AppDatabase::class.java, "database-name"
-            ).build())
+    private val repository: ToDoRepository = ToDoRepository(AppDatabase.getDatabase(application))
 
     class Factory(private val application : Application) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("unchecked_cast")
