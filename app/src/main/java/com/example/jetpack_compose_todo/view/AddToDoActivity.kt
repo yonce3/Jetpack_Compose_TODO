@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,14 +37,15 @@ class AddToDoActivity : AppCompatActivity() {
                 val (titleTextField, todoTextField, button) = createRefs()
                 Column {
                     TopBar()
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(modifier = Modifier.weight(1f).padding(16.dp)) {
                         OutlinedTextField(
                                 value = title,
                                 onValueChange = { toDoViewModel.title.value = it },
                                 label = { Text("タイトル") },
                                 maxLines = 2,
                         )
-                        OutlinedTextField(value = todo,
+                        OutlinedTextField(
+                                value = todo,
                                 onValueChange = { toDoViewModel.todo.value = it },
                                 label = { Text("ToDo") },
                                 maxLines = 3)
@@ -63,8 +65,9 @@ class AddToDoActivity : AppCompatActivity() {
     fun FloatingActionButton(title: String, todo: String) {
         FloatingActionButton(
                 onClick = { onDoneButtonClick(title, todo) },
-                elevation = FloatingActionButtonDefaults.elevation(8.dp)
-        ){ Icon(Icons.Filled.Done) }
+                elevation = FloatingActionButtonDefaults.elevation(8.dp),
+                contentColor = Color.White
+        ) { Icon(Icons.Filled.Done) }
     }
 
     @Preview
