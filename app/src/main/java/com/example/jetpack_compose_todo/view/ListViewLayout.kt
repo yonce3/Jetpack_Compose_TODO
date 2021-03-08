@@ -56,28 +56,30 @@ fun ListViewLayout(viewModel: MainViewModel, items: List<ToDo>, onClicked: (item
 fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
     val padding = 16.dp
     val typography = MaterialTheme.typography
-    Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp, 8.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .clickable(onClick = onClick)
-                    .fillMaxWidth()) {
-        Checkbox(checked = false, onCheckedChange = {}, modifier = Modifier.weight(0.5f))
-        Column(modifier = Modifier.weight(3f).padding(0.dp, 10.dp, 4.dp, 10.dp)) {
-            Text(todo.title,
-                    style = typography.h6,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold)
-            Text(todo.todo,
-                    style = typography.body2,
-                    maxLines = 2)
+    Card(modifier = Modifier.fillMaxWidth()
+            .padding(8.dp, 8.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .clickable(onClick = onClick),
+            elevation = 10.dp) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(checked = false, onCheckedChange = {}, modifier = Modifier.weight(0.5f))
+            Column(modifier = Modifier.weight(3f).padding(0.dp, 10.dp, 4.dp, 10.dp)) {
+                Text(todo.title,
+                        style = typography.h6,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Bold)
+                Text(todo.todo,
+                        style = typography.body2,
+                        maxLines = 2)
+            }
+            Text(convertTodoStateToText(todo.state),
+                    style = typography.body1,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray,
+                    modifier = Modifier.weight(0.6f)
+            )
         }
-        Text(convertTodoStateToText(todo.state),
-                style = typography.body1,
-                fontWeight = FontWeight.Bold,
-                color = Color.Gray,
-                modifier = Modifier.weight(0.6f)
-        )
     }
 }
 
