@@ -1,6 +1,5 @@
 package com.example.jetpack_compose_todo.view
 
-import android.view.Gravity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,8 +24,8 @@ import com.example.jetpack_compose_todo.data.ToDo
 import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 
 @Composable
-fun ListViewLayout(viewModel: MainViewModel, items: List<ToDo>, onClicked: (item: ToDo) -> Unit, modifier: Modifier, activity: MainActivity) {
-    //val items: List<ToDo> by viewModel.items.observeAsState(listOf<ToDo>())
+fun ListViewLayout(viewModel: MainViewModel, onClicked: (item: ToDo) -> Unit, modifier: Modifier, activity: MainActivity) {
+    val items = viewModel.items.observeAsState(listOf()).value
     Scaffold(
             topBar = { TopAppBar(
                         title = { Text(text = "Jetpack Compose ToDo") },

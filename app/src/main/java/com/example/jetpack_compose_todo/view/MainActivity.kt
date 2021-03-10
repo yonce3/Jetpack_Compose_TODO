@@ -13,6 +13,7 @@ import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 import com.example.jetpack_compose_todo.data.ToDo
 
 class MainActivity : AppCompatActivity() {
+    val detailFragment: DetailFragment = DetailFragment.newInstance()
     val viewModel: MainViewModel by lazy {
         MainViewModel.Factory(application).create(MainViewModel::class.java)
     }
@@ -44,15 +45,9 @@ class MainActivity : AppCompatActivity() {
             return this
         }
         viewModel.getItems()
-        // for JetPack Compose
         setContent {
-            var items: List<ToDo> = listOf()
-            viewModel.items.value?.let {
-                items = it
-            }
-
             viewModel.items.let {
-                ListViewLayout(viewModel, items, { it -> this }, Modifier, this)
+                ListViewLayout(viewModel, onClicked = { it -> onClicked(it)}, Modifier, this)
             }
         }
     }
@@ -66,5 +61,10 @@ class MainActivity : AppCompatActivity() {
     fun startAddToDoActivity() {
         val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun onClicked(todo: ToDo) {
+        val transaction = supportFragmentManager.beginTransaction()
+
     }
 }

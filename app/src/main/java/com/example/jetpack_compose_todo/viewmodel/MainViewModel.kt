@@ -2,7 +2,6 @@ package com.example.jetpack_compose_todo.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import androidx.room.Room
 import com.example.jetpack_compose_todo.ToDoRepository
 import com.example.jetpack_compose_todo.data.AppDatabase
 import com.example.jetpack_compose_todo.data.ToDo
