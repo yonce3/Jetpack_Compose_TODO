@@ -1,10 +1,7 @@
 package com.example.jetpack_compose_todo.view
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -48,6 +45,11 @@ fun ListViewLayout(viewModel: MainViewModel, onClicked: (item: ToDo) -> Unit, mo
                                         ToDoItem(item) { onClicked(item) }
                                     }
                                 }
+            },
+            bottomBar = {
+                BottomAppBar {
+                    BottomBar()
+                }
             }
     )
 }
@@ -80,6 +82,42 @@ fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
                     modifier = Modifier.weight(0.6f)
             )
         }
+    }
+}
+
+@Composable
+fun BottomBar() {
+    BottomAppBar {
+        Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.width(8.dp))
+                BottomMenuItem(
+                        //iconAsset = Icons.Filled.Favorite,
+                        text = "未対応",
+                        click = {})
+                BottomMenuItem(
+                        //iconAsset = Icons.Filled.Favorite,
+                        text = "対応中",
+                        click = {})
+                BottomMenuItem(
+                        //iconAsset = Icons.Filled.Favorite,
+                        text = "対応済",
+                        click = {})
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomMenuItem(text: String, click: () -> Unit) {
+    Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.absolutePadding(left = 8.dp, right = 8.dp)
+    ) {
+        Text(text = text)
     }
 }
 
