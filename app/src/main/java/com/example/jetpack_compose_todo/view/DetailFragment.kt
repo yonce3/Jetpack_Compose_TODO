@@ -36,7 +36,6 @@ class DetailFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(): DetailFragment = DetailFragment()
-
             // この書き方いいね
             //DetailFragment().apply {
 //                arguments = Bundle().apply {
