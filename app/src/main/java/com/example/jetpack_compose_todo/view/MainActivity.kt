@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 import com.example.jetpack_compose_todo.data.ToDo
 
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getItems()
         setContent {
             viewModel.items.let {
-                ListViewLayout(viewModel, onClicked = { it -> onClicked(it)}, Modifier, this)
+                ListViewLayout(viewModel, Modifier, this)
             }
         }
     }
@@ -61,10 +63,5 @@ class MainActivity : AppCompatActivity() {
     fun startAddToDoActivity() {
         val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun onClicked(todo: ToDo) {
-        val transaction = supportFragmentManager.beginTransaction()
-
     }
 }

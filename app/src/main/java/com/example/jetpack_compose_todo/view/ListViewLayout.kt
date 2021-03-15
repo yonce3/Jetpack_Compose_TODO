@@ -17,12 +17,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.jetpack_compose_todo.data.ToDo
 import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 
 @Composable
-fun ListViewLayout(viewModel: MainViewModel, onClicked: (item: ToDo) -> Unit, modifier: Modifier, activity: MainActivity) {
+fun ListViewLayout(viewModel: MainViewModel, modifier: Modifier, activity: MainActivity) {
     val items = viewModel.items.observeAsState(listOf()).value
+    val navController = rememberNavController()
     Scaffold(
             topBar = { TopAppBar(
                         title = { Text(text = "Jetpack Compose ToDo") },
@@ -42,7 +46,7 @@ fun ListViewLayout(viewModel: MainViewModel, onClicked: (item: ToDo) -> Unit, mo
             bodyContent = {
                 innerPadding -> LazyColumn(modifier = modifier) {
                                     items(items = items) { item ->
-                                        ToDoItem(item) { onClicked(item) }
+                                        ToDoItem(item) { onClicked(item, navController) }
                                     }
                                 }
             },
@@ -58,6 +62,7 @@ fun ListViewLayout(viewModel: MainViewModel, onClicked: (item: ToDo) -> Unit, mo
 fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
     val padding = 16.dp
     val typography = MaterialTheme.typography
+    val navController = rememberNavController()
     Card(modifier = Modifier.fillMaxWidth()
             .padding(8.dp, 8.dp)
             .clip(RoundedCornerShape(4.dp))
@@ -144,5 +149,9 @@ private fun convertTodoStateToText(state: Int): String =
         2 -> "対応済み"
         else -> "未対応"
     }
+
+private fun onClicked(todo: ToDo, navController: NavHostController) {
+    navController.navigate(ScreenName.DETAIL)
+}
 
 
