@@ -21,9 +21,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun getItems() {
         viewModelScope.launch {
-            // repository get Items
             try {
-                println("taroro")
                 val list = repository.getItems()
                 items.postValue(list)
             } catch(error: Throwable) {

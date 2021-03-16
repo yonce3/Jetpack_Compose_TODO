@@ -1,16 +1,19 @@
 package com.example.jetpack_compose_todo.view
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+//import androidx.navigation.NavHostController
+//import androidx.navigation.compose.rememberNavController
 import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 import com.example.jetpack_compose_todo.data.ToDo
 
@@ -28,11 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-    }
-
-    // OnActivityResultを置き換えて、
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +59,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startAddToDoActivity() {
+        val startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
+                if (result?.resultCode == Activity.RESULT_OK) {
+                    viewModel.getItems()
+                }
+            }
         val intent = Intent(this@MainActivity, AddToDoActivity::class.java)
-        startActivity(intent)
+        startForResult.launch(intent)
     }
 }

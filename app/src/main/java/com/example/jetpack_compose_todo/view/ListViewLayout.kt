@@ -14,19 +14,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
+//import androidx.navigation.NavHostController
+//import androidx.navigation.compose.rememberNavController
 import com.example.jetpack_compose_todo.data.ToDo
 import com.example.jetpack_compose_todo.viewmodel.MainViewModel
 
 @Composable
 fun ListViewLayout(viewModel: MainViewModel, modifier: Modifier, activity: MainActivity) {
     val items = viewModel.items.observeAsState(listOf()).value
-    val navController = rememberNavController()
+    //val navController = rememberNavController()
     Scaffold(
             topBar = { TopAppBar(
                         title = { Text(text = "Jetpack Compose ToDo") },
@@ -46,7 +46,7 @@ fun ListViewLayout(viewModel: MainViewModel, modifier: Modifier, activity: MainA
             bodyContent = {
                 innerPadding -> LazyColumn(modifier = modifier) {
                                     items(items = items) { item ->
-                                        ToDoItem(item) { onClicked(item, navController) }
+                                        ToDoItem(item) { onClicked(item) }
                                     }
                                 }
             },
@@ -62,14 +62,13 @@ fun ListViewLayout(viewModel: MainViewModel, modifier: Modifier, activity: MainA
 fun ToDoItem(todo: ToDo, onClick: () -> Unit) {
     val padding = 16.dp
     val typography = MaterialTheme.typography
-    val navController = rememberNavController()
     Card(modifier = Modifier.fillMaxWidth()
             .padding(8.dp, 8.dp)
             .clip(RoundedCornerShape(4.dp))
             .clickable(onClick = onClick),
             elevation = 10.dp) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(checked = false, onCheckedChange = {}, modifier = Modifier.weight(0.5f))
+            Checkbox(checked = true, onCheckedChange = { todo.selected = it }, modifier = Modifier.weight(0.5f))
             Column(modifier = Modifier.weight(3f).padding(0.dp, 10.dp, 4.dp, 10.dp)) {
                 Text(todo.title,
                         style = typography.h6,
@@ -143,15 +142,15 @@ fun NoItemLayout(activity: MainActivity) {
 
 // TODO: getStringとかの方が良い？
 private fun convertTodoStateToText(state: Int): String =
-    when(state) {
+        when(state) {
         0 -> "未対応"
         1 -> "対応中"
         2 -> "対応済み"
         else -> "未対応"
     }
 
-private fun onClicked(todo: ToDo, navController: NavHostController) {
-    navController.navigate(ScreenName.DETAIL)
+private fun onClicked(todo: ToDo) {
+    //navController.navigate(ScreenName.DETAIL)
 }
 
 

@@ -9,5 +9,6 @@ data class ToDo(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name="title") val title: String,
     @ColumnInfo(name="lastname") val todo: String,
-    @ColumnInfo(name="state") val state: Int = 0
+    @ColumnInfo(name="state") val state: Int = 0,
+    @ColumnInfo(name="selected") var selected: Boolean = false,
     )

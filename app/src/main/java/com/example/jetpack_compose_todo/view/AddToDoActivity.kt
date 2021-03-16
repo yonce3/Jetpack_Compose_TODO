@@ -1,5 +1,6 @@
 package com.example.jetpack_compose_todo.view
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -79,6 +80,7 @@ class AddToDoActivity : AppCompatActivity() {
     private fun onDoneButtonClick(title: String, todo: String) {
         if (title.isNotEmpty() && todo.isNotEmpty()) {
             todoViewModel.addToDo(title, todo)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         } else if (title.isEmpty()) {
             showTitleIsEmptyToast()

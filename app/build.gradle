@@ -88,5 +88,5 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     // Navigation
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha06"
+    //implementation "androidx.navigation:navigation-compose:1.0.0-alpha06"
 }
